@@ -1,2 +1,2 @@
 # Fundamentals of Machine learning
- This repository contains themes about ML, from basics to advanced
+ This repository contains themes about ML, from basic to advanced
