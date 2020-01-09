@@ -63,10 +63,10 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 % recode y to Y
-I = eye(num_labels);
+rs = eye(num_labels);
 Y = zeros(m, num_labels);
 for i=1:m
-  Y(i, :)= I(y(i), :);
+  Y(i, :)= rs(y(i), :);
 end
 
 % feedforward
@@ -81,18 +81,16 @@ h = a3;
 p = sum(sum(Theta1(:, 2:end).^2, 2))+sum(sum(Theta2(:, 2:end).^2, 2));
 
 % calculate J
-J = sum(sum((-Y).*log(h) - (1-Y).*log(1-h), 2))/m + lambda*p/(2*m);
+J = sum(sum((-Y).*log(h) - (1-Y).*log(1-h), 2.0))/m + lambda*p/(2*m);
 
 % calculate sigmas
 sigma3 = a3-Y;
 sigma2 = (sigma3*Theta2).*sigmoidGradient([ones(size(z2, 1), 1) z2]);
 sigma2 = sigma2(:, 2:end);
-
-% accumulate gradients
 delta_1 = (sigma2'*a1);
 delta_2 = (sigma3'*a2);
 
-% calculate regularized gradient
+% regularized gradient
 p1 = (lambda/m)*[zeros(size(Theta1, 1), 1) Theta1(:, 2:end)];
 p2 = (lambda/m)*[zeros(size(Theta2, 1), 1) Theta2(:, 2:end)];
 Theta1_grad = delta_1./m + p1;
